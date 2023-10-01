@@ -52,7 +52,7 @@ def get_schema():
         schema_json = json.dumps(schema_list, indent=2)
         return schema_json.replace('\n', '<br>')
     except Exception as e:
-        return f"Error getting the Parquet schema: {str(e)}"
+        return "Error processing the Parquet file: {}".format(str(e))
 
 if __name__ == '__main__':
     app.run(debug=True)

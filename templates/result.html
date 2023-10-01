@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>DataFrame Table</title>
+    <style>
+        .table-container { 
+            overflow-y: auto; 
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th, td {
+            padding: 12px;
+            text-align: left;
+        }
+        th {
+            background-color: #3498db; 
+            color: #fff; 
+        }
+        tr:nth-child(even) {
+            background-color: #f2f2f2; 
+        }
+        tr:hover {
+            background-color: #e0e0e0; 
+        }
+        .success {
+            background-color: #27ae60; 
+            color: #fff; 
+        }
+        .warning {
+            background-color: #f1c40f; 
+            color: #fff; 
+        }
+        .danger {
+            background-color: #e74c3c; 
+            color: #fff; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Parquet Viewer :)</h1>
+    <div class="table-container">
+        {{ table|safe }}
+    

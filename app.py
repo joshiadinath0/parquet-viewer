@@ -29,7 +29,7 @@ def process_parquet():
 
         return render_template('result.html', table=table_html)
     except Exception as e:
-        return f"Error processing the Parquet file: {str(e)}"
+        return "Error processing the Parquet file: {}".format(str(e))
 
 @app.route('/get_schema', methods=['POST'])
 def get_schema():

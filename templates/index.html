@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Parquet File Upload</title>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            color: #333;
+        }
+
+        form {
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
+            margin-top: 20px;
+        }
+
+        input[type="file"] {
+            display: none;
+        }
+
+        label.custom-file-upload {
+            background-color: #008CBA;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        input[type="file"]:not(:disabled) + label.custom-file-upload {
+            background-color: #00a0d2; 
+        }
+
+        input[type="submit"],
+        input[type="button"] {
+            background-color: #008CBA;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        input[type="submit"]:hover,
+        input[type="button"]:hover {
+            background-color: #005b80;
+        }
+
+        #schemaResult {
+            margin-top: 20px;
+        }
+
+        #uploadedFileName {
+            margin-top: 10px;
+            color: #333;
+        }
+        .made-with {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            color: #333;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Upload a Parquet File</h1>
+    <form method="POST" action="/process_parquet" enctype="multipart/form-data" id="uploadForm">
+        <input type="file" name="file" accept=".parquet" id="file">
+        <label for="file" class="custom-file-upload">Choose File</label>
+        <span id="uploadedFileName"></span> <!-- Display uploaded file name here -->
+        <input type="submit" name="submit_action" value="Upload and Process">
+        <input type="button" value="Print Schema" onclick="submitFormToGetSchema()">
+    </form>
+    <div id="schemaResult"></div>
+    
+    <div class="made-with">Made with ❤ by Adinath</div>
+    <script>
+        document.querySelector('input[type="file"]').addEventListener('change', function() {
+            document.getElementById('uploadedFileName').textContent = this.files[0].name;
+        });
+
+        function submitFormToGetSchema() {
+            var formData = new FormData();
+            formData.append("file", document.querySelector("input[type=file]").files[0]);
+            
+            $.ajax({
+                type: "POST",
+                url: "/get_schema",
+                data: formData,
+                processData: false,  
+                contentType: false,  
+                success: function(response) {
+                    $("#schemaResult").html(response);
+                },
+                error: function(error) {
+                    console.error(error);
+                }
+            });
+        }
+    </script>
+</body>
+</html>
